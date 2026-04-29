@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Examining Our Biases — Companion Handout</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #fbf6ea;
+      --paper-edge: #f0e8d2;
+      --ink: #1f1a14;
+      --ink-mute: #5a4e3a;
+      --ink-faint: #8a7d66;
+      --marker: #c8412a;
+      --marker-blue: #2a5a8a;
+      --marker-green: #4a7a4a;
+      --hi-yellow: #fde68a;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: #e8e2d2;
+      color: var(--ink);
+      font-family: "Libre Caslon Text", "Iowan Old Style", Georgia, serif;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--paper-edge);
+      border-bottom: 1px solid var(--ink-faint);
+      padding: 12px 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 2px 6px rgba(30,25,15,0.06);
+    }
+    .toolbar h1 {
+      margin: 0; font-family: "Caveat", cursive;
+      font-size: 22px; font-weight: 700;
+    }
+    .toolbar .actions {
+      display: flex; gap: 10px;
+    }
+    .toolbar button {
+      background: var(--marker);
+      border: 2px solid var(--marker);
+      color: var(--paper);
+      font-family: "Caveat", cursive;
+      font-size: 16px; font-weight: 700;
+      padding: 5px 18px; cursor: pointer;
+      transform: rotate(-1deg);
+    }
+    .toolbar button.secondary {
+      background: transparent;
+      color: var(--ink-mute);
+      border: 1.5px solid var(--ink-faint);
+      transform: none;
+    }
+    .pages {
+      max-width: 8.5in;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    .page {
+      background: var(--paper);
+      width: 8.5in;
+      min-height: 11in;
+      margin: 0 auto 24px;
+      padding: 0.7in 0.85in;
+      box-shadow: 0 2px 12px rgba(30,25,15,0.15);
+      position: relative;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+
+    /* Subtle paper texture */
+    .page::before {
+      content: '';
+      position: absolute; inset: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.3  0 0 0 0 0.1  0 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    }
+    .page > * { position: relative; z-index: 1; }
+
+    .hand { font-family: "Caveat", "Kalam", cursive; }
+
+    /* COVER */
+    .cover { display: flex; flex-direction: column; justify-content: center; min-height: 9.6in; }
+    .cover .eyebrow {
+      font-size: 11px; letter-spacing: 3px; color: var(--ink-mute);
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .cover h1 {
+      font-family: "Caveat", cursive;
+      font-size: 96px; line-height: 0.92;
+      font-weight: 700; margin: 0 0 18px;
+    }
+    .cover h1 .accent { color: var(--marker); }
+    .cover .lede {
+      font-size: 19px; line-height: 1.5;
+      max-width: 5.2in;
+      color: var(--ink-mute);
+      font-style: italic;
+      margin: 0 0 32px;
+    }
+    .cover .meta {
+      border-top: 2px dashed var(--ink-faint);
+      padding-top: 14px;
+      font-family: "Caveat", cursive;
+      font-size: 16px;
+      color: var(--ink-mute);
+    }
+    .cover .meta .label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; color: var(--ink-faint); font-family: "Libre Caslon Text", serif; }
+    .cover .meta-row { margin-bottom: 12px; }
+
+    /* TOC */
+    .toc h2 {
+      font-family: "Caveat", cursive;
+      font-size: 56px; line-height: 1; margin: 0 0 6px; font-weight: 700;
+    }
+    .toc .subtitle {
+      font-size: 13px; color: var(--ink-mute); font-style: italic;
+      border-bottom: 2px dashed var(--ink-faint);
+      padding-bottom: 18px; margin-bottom: 28px;
+    }
+    .toc h3 {
+      font-family: "Caveat", cursive;
+      font-size: 24px; margin: 24px 0 8px;
+      color: var(--marker); font-weight: 700;
+    }
+    .toc-list {
+      list-style: none; padding: 0; margin: 0;
+    }
+    .toc-list li {
+      display: flex; gap: 12px; padding: 8px 0;
+      border-bottom: 1px dotted var(--ink-faint);
+      font-size: 14.5px;
+    }
+    .toc-list .num {
+      width: 32px; flex-shrink: 0;
+      font-family: "Caveat", cursive; font-size: 22px; font-weight: 700;
+      color: var(--marker);
+    }
+    .toc-list .title { flex: 1; }
+    .toc-list .cat {
+      color: var(--ink-mute); font-style: italic; font-size: 13px;
+    }
+
+    /* HOW-TO */
+    .howto h2 {
+      font-family: "Caveat", cursive;
+      font-size: 48px; line-height: 1; margin: 0 0 6px; font-weight: 700;
+    }
+    .howto p { font-size: 15px; line-height: 1.65; margin: 12px 0; }
+    .howto .step {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 14px 0; border-bottom: 1px dashed var(--ink-faint);
+    }
+    .howto .step:last-child { border-bottom: none; }
+    .howto .step .badge {
+      width: 36px; height: 36px; flex-shrink: 0;
+      border-radius: 50%; border: 2px solid var(--marker);
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Caveat", cursive; font-size: 22px; font-weight: 700;
+      color: var(--marker);
+    }
+    .howto .step h3 {
+      font-family: "Caveat", cursive;
+      font-size: 22px; margin: 0 0 4px; font-weight: 700;
+    }
+
+    /* ENTRY page */
+    .entry .header {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 12px; margin-bottom: 22px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .entry .num {
+      font-family: "Caveat", cursive;
+      font-size: 56px; line-height: 0.9;
+      font-weight: 700; color: var(--marker);
+    }
+    .entry .cat {
+      font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--ink-mute); margin-bottom: 6px;
+    }
+    .entry h2 {
+      font-family: "Caveat", cursive;
+      font-size: 38px; line-height: 1.05;
+      margin: 0; font-weight: 700;
+    }
+    .entry .pulled {
+      background: var(--hi-yellow);
+      padding: 14px 18px;
+      margin: 18px 0 22px;
+      transform: rotate(-0.3deg);
+      box-shadow: 2px 3px 0 rgba(30,25,15,0.08);
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .entry .pulled .label {
+      display: block;
+      font-style: normal; font-family: "Caveat", cursive;
+      font-size: 13px; font-weight: 700; color: var(--marker);
+      letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .entry .prompts {
+      list-style: none; padding: 0; margin: 0;
+    }
+    .entry .prompts li {
+      margin-bottom: 22px;
+    }
+    .entry .prompts .q {
+      font-family: "Caveat", cursive;
+      font-size: 19px; line-height: 1.25;
+      font-weight: 700; margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .entry .prompts .lines {
+      background-image: repeating-linear-gradient(transparent 0, transparent 27px, var(--ink-faint) 27px, var(--ink-faint) 28px);
+      background-position: 0 0;
+      min-height: 56px;
+      border: 1px solid var(--ink-faint);
+      border-top: none;
+      padding: 0;
+    }
+    .entry .prompts .lines.tall { min-height: 84px; }
+    .entry .prompts .lines.short { min-height: 28px; }
+
+    /* APPENDIX */
+    .appendix h2 {
+      font-family: "Caveat", cursive;
+      font-size: 56px; line-height: 1; margin: 0 0 6px; font-weight: 700;
+    }
+    .appendix .subtitle {
+      font-size: 13px; color: var(--ink-mute); font-style: italic;
+      border-bottom: 2px dashed var(--ink-faint);
+      padding-bottom: 18px; margin-bottom: 24px;
+    }
+    .appendix .citation {
+      padding: 12px 0;
+      border-bottom: 1px dotted var(--ink-faint);
+    }
+    .appendix .citation .ent {
+      font-family: "Caveat", cursive;
+      font-size: 14px; font-weight: 700;
+      color: var(--marker); letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .appendix .citation .quote {
+      font-size: 14px; line-height: 1.55;
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+    .appendix .citation .src {
+      font-size: 12.5px;
+      color: var(--ink-mute);
+      font-family: "Libre Caslon Text", serif;
+    }
+    .appendix h3 {
+      font-family: "Caveat", cursive;
+      font-size: 28px; margin: 28px 0 10px;
+      color: var(--marker); font-weight: 700;
+    }
+    .appendix .reading {
+      list-style: none; padding: 0; margin: 0;
+    }
+    .appendix .reading li {
+      padding: 10px 0;
+      border-bottom: 1px dotted var(--ink-faint);
+      font-size: 13.5px; line-height: 1.5;
+    }
+    .appendix .reading .author {
+      font-weight: 700;
+    }
+    .appendix .reading .title {
+      font-style: italic;
+    }
+    .appendix .reading .note {
+      display: block;
+      font-size: 12.5px;
+      color: var(--ink-mute);
+      margin-top: 3px;
+    }
+
+    /* PRINT */
+    @media print {
+      body { background: white; }
+      .toolbar { display: none; }
+      .pages { margin: 0; padding: 0; max-width: none; }
+      .page {
+        box-shadow: none; margin: 0;
+        width: 100%;
+        min-height: auto;
+        padding: 0.5in 0.6in;
+      }
+      @page { size: letter; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <h1>Examining Our Biases · Companion Handout</h1>
+    <div class="actions">
+      <button class="secondary" onclick="window.location.href='index.html'">← back to training</button>
+      <button onclick="window.print()">↓ print or save as PDF</button>
+    </div>
+  </div>
+
+  <div class="pages">
+
+    <!-- COVER -->
+    <div class="page cover">
+      <div class="eyebrow">A printable companion to · Examining Our Biases</div>
+      <h1>The <span class="accent">offline</span><br />workbook.</h1>
+      <p class="lede">
+        Ten reflection pages — one per training entry — that ask deeper questions than the screen does. Plus a research appendix so you know who said what, and where to keep reading. Designed to be printed, written in, and folded into a binder.
+      </p>
+      <div class="meta">
+        <div class="meta-row">
+          <span class="label">Educator</span>
+          ____________________________________________________
+        </div>
+        <div class="meta-row">
+          <span class="label">Grade band</span>
+          ____________________________________________________
+        </div>
+        <div class="meta-row">
+          <span class="label">Started on</span>
+          ____________________________________________________
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW TO USE -->
+    <div class="page howto">
+      <h2>How to use this.</h2>
+      <p style="border-bottom: 2px dashed var(--ink-faint); padding-bottom: 14px; font-style: italic; color: var(--ink-mute); font-size: 14px;">
+        The digital workbook does the scenarios. This handout does the reflection — the part that needs your slowest, most honest writing. Three ways to use it:
+      </p>
+      <div class="step">
+        <div class="badge">1</div>
+        <div>
+          <h3>Alongside the digital training.</h3>
+          <p>Complete an entry on screen, then turn to the matching page here. The digital prompts are immediate; these are the ones to come back to in a quiet hour. Don't try to do all ten at once.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="badge">2</div>
+        <div>
+          <h3>As a study guide for a small group.</h3>
+          <p>Three to five colleagues, monthly. One entry per meeting. Everyone writes their answers privately first — fifteen minutes — then shares the one they're most willing to. The page keeps the conversation honest because nobody can wing it.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="badge">3</div>
+        <div>
+          <h3>As a personal journal across the year.</h3>
+          <p>Pick one page a month. Write the date in the corner. Come back next August and reread your old answers next to your new ones. That's the data on your own growth that no analytics tool can give you.</p>
+        </div>
+      </div>
+      <p style="margin-top: 28px; padding: 14px 18px; background: var(--paper-edge); font-size: 14.5px; line-height: 1.6;">
+        <strong>One note on whose voice is missing:</strong> these prompts often ask whose perspective the workbook didn't include — the parent, the student, the colleague, the building leader. That question is intentional. Fill it in honestly even when the honest answer is "I don't know yet, and that's the problem."
+      </p>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="page toc">
+      <h2>What's in here.</h2>
+      <div class="subtitle">Ten entries · one research appendix · one further-reading list</div>
+
+      <h3>Reflection pages</h3>
+      <ol class="toc-list">
+        <li><span class="num">01</span><span class="title">The 'disruptive' reader</span><span class="cat">discipline & referrals</span></li>
+        <li><span class="num">02</span><span class="title">Who gets called on</span><span class="cat">classroom participation</span></li>
+        <li><span class="num">03</span><span class="title">'That family, though'</span><span class="cat">staff lounge</span></li>
+        <li><span class="num">04</span><span class="title">Before Mr. Nguyen arrives</span><span class="cat">parent-teacher</span></li>
+        <li><span class="num">05</span><span class="title">The gifted referral form</span><span class="cat">academic tracking</span></li>
+        <li><span class="num">06</span><span class="title">'Something's off' with DeShawn</span><span class="cat">SPED referrals</span></li>
+        <li><span class="num">07</span><span class="title">The playground scuffle</span><span class="cat">peer conflicts</span></li>
+        <li><span class="num">08</span><span class="title">Reading the same essay twice</span><span class="cat">grading & feedback</span></li>
+        <li><span class="num">09</span><span class="title">First-word association</span><span class="cat">quick bias check</span></li>
+        <li><span class="num">10</span><span class="title">What are you taking with you?</span><span class="cat">commitment</span></li>
+      </ol>
+
+      <h3>Back of the book</h3>
+      <ol class="toc-list" start="11">
+        <li><span class="num">A</span><span class="title">Research appendix — every citation, in one place</span></li>
+        <li><span class="num">B</span><span class="title">Further reading — books to start with</span></li>
+      </ol>
+    </div>
+
+    <!-- ENTRY 01 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Discipline & behavior referrals</div>
+          <h2>The 'disruptive' reader</h2>
+        </div>
+        <div class="num">01</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        Black students are referred for "subjective" infractions — disruption, defiance, disrespect — at 2-3x the rate of white peers for identical behaviors.
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">Whose voice was missing from this scenario?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Write about a real moment a colleague pushed you to discipline a student of color. What did you do? What do you wish you had done?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">In the last month, how many of your referrals (or close calls) were students of color? List them by initial.</div>
+          <div class="lines"></div>
+        </li>
+        <li>
+          <div class="q">What is one structural change — not a personal intention — that would interrupt a referral pipeline in your building?</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ENTRY 02 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Classroom participation</div>
+          <h2>Who gets called on</h2>
+        </div>
+        <div class="num">02</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        Teachers call on boys 80% more often than girls, and white students more than students of color — even when they believe they call on everyone equally.
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">If you tallied your call-ons for one period tomorrow, what pattern do you predict you'd find? Be specific by name.</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">When you skip a student because you "don't want to put them on the spot" — what are you actually protecting? Them, or you?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">What kind of question do you usually ask your strongest students? Your quietest? Your most-likely-to-be-wrong students?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Pick one structural change you could try Monday (random caller, equity sticks, no-hands-up). What do you predict will be hard about it?</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ENTRY 03 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Staff lounge conversations</div>
+          <h2>'That family, though'</h2>
+        </div>
+        <div class="num">03</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        Deficit framing of families of color — "they don't care," "they won't show up" — is the single strongest predictor of low teacher expectations.
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">Write down a sentence you've heard in your staff lounge about a family that, in retrospect, was deficit framing. Who said it? What did you do?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Why is interrupting a colleague harder than interrupting a student? What's actually at risk for you?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Draft a one-line interrupt you could realistically say next time. Make it short enough to remember on a tired Friday.</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">If a colleague used your interrupt against you ("oh, calling me racist now?"), what would you say next?</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ENTRY 04 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Parent-teacher conferences</div>
+          <h2>Before Mr. Nguyen arrives</h2>
+        </div>
+        <div class="num">04</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        Asian American students are disproportionately described in trait-based language ("sweet," "quiet") rather than skill-based language — a pattern that mirrors how girls are described.
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">Pick a recent conference. Write down three things you said about the student. How many were trait language vs. skill language?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Whose conference notes are thin in your gradebook right now? What does that thinness tell you?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">What assumptions do you make based on a parent's English fluency? Be honest. Name at least one.</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Write a one-sentence opening line you could use to ask any parent — without performing — what they want you to know about their child.</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ENTRY 05 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Academic tracking & recommendations</div>
+          <h2>The gifted referral form</h2>
+        </div>
+        <div class="num">05</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        Black students are 54% less likely than white students with the same test scores to be recommended for gifted programs by their teachers.
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">Look at your last list of academic recommendations — gifted, advanced math, summer enrichment, anything. Who's on it? Who isn't? Why?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Name a student you considered "smart but not gifted." Why? What would you have to see for that to change?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Whose family did you not contact about the opportunity? What story did you tell yourself about why?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">If you had to add one student to a recommendation list right now, who would it be — and what's stopping you?</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ENTRY 06 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Special education referrals</div>
+          <h2>'Something's off' with DeShawn</h2>
+        </div>
+        <div class="num">06</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        Black students are 40% more likely to be identified with emotional/behavioral disorders, and far less likely to be identified with specific learning disabilities, than white peers with similar profiles.
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">Think of a student you've referred — or considered referring — for SPED. Write about the moment you decided "something's off." What did you actually see?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">What Tier 1 strategies had you tried, and for how long? Be honest about whether "I tried everything" was actually a few weeks.</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">How well do you know the student's home language and home life? List what you know. List what you assumed.</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">If the referral were declined, what would you do for this student instead? Write the actual plan.</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ENTRY 07 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Peer-to-peer conflicts</div>
+          <h2>The playground scuffle</h2>
+        </div>
+        <div class="num">07</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        Black girls are viewed as less innocent and more adult-like than white girls of the same age, starting as early as age five — a pattern researchers call "adultification bias."
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">Recall a recent peer conflict in your class. Whose version did you believe first? Why?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">When two students give competing accounts, which student's affect (calm, crying, angry, quiet) reads to you as "the truth-teller"? Why might that itself be biased?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Have you ever described a student of color, especially a Black girl, as "knows better" or "should know" — language you'd never use for a white peer her age? Write about it.</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">What's a script you could use to slow down the consequence-decision when a conflict has a racial layer?</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ENTRY 08 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Grading & feedback language</div>
+          <h2>Reading the same essay twice</h2>
+        </div>
+        <div class="num">08</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        When the same student essay is presented with a white-sounding or Black-sounding name, teachers on average give the Black-named version a lower grade and more deficit-framed feedback.
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">Look at your last batch of graded student work. Re-read the comments you wrote on three students of color and three white students. What patterns do you see in your language?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">When does your feedback get shorter? When does it get more critical? Whose work tends to fall in each category?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Could you grade your next set name-hidden? What would have to change about your process? What are you afraid you'd find?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Pick one feedback phrase you use a lot. Translate it from "deficit" to "strengths-and-next-steps." Practice writing the new version.</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ENTRY 09 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Quick bias check</div>
+          <h2>First-word association</h2>
+        </div>
+        <div class="num">09</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        Over 85% of educators who take the Race IAT show some degree of implicit pro-white association — including the majority of educators of color.
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">When you imagined "the bright student" in your mind — before reading further — who came to mind? Race, gender, class. Be specific. No one is reading this but you.</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Where did that image come from? Family? Schooling? Movies? Your own past students?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Have you taken a Project Implicit IAT? If yes, what did you score, and what did you do with the result? If no, what's stopping you?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">What is one snap judgment you've made about a student in the last month that, on reflection, doesn't hold up?</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ENTRY 10 -->
+    <div class="page entry">
+      <div class="header">
+        <div>
+          <div class="cat">Commitment & action</div>
+          <h2>What are you taking with you?</h2>
+        </div>
+        <div class="num">10</div>
+      </div>
+      <div class="pulled">
+        <span class="label">From the entry</span>
+        Bias training without structural follow-through shows null effects at 90 days. Training plus one sustained structural change shows measurable shifts in referral and grading patterns.
+      </div>
+      <ul class="prompts">
+        <li>
+          <div class="q">What is the single most uncomfortable thing you wrote in this workbook? Write it again here, and circle the part you most want to forget.</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Write three commitments. Specific. Behavioral. Time-bound. (Not "I'll be more aware." Yes "I will track call-ons in 3rd period for two weeks.")</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">Who is one colleague you will share these commitments with, by name? When will you tell them?</div>
+          <div class="lines"></div>
+        </li>
+        <li>
+          <div class="q">Pick a check-in date 30 days from now. Write it down. What will you ask yourself?</div>
+          <div class="lines tall"></div>
+        </li>
+        <li>
+          <div class="q">If nothing changes — if you do this workbook and your classroom looks the same in three months — what will that have meant?</div>
+          <div class="lines tall"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- APPENDIX A: RESEARCH -->
+    <div class="page appendix">
+      <h2>Appendix A · Research</h2>
+      <div class="subtitle">Every research clip from the workbook, with full source — for facilitators, skeptics, and curious educators.</div>
+
+      <div class="citation">
+        <div class="ent">Entry 01 · Discipline</div>
+        <div class="quote">"Black children represent 18% of preschool enrollment but 48% of preschool children receiving more than one out-of-school suspension."</div>
+        <div class="src">U.S. Department of Education, Office for Civil Rights · Civil Rights Data Collection (CRDC), 2014 Snapshot. Available at ocrdata.ed.gov.</div>
+      </div>
+
+      <div class="citation">
+        <div class="ent">Entry 02 · Participation</div>
+        <div class="quote">"Teachers call on boys in class 80% more often than girls, and white students more often than students of color — even when they believe they call on everyone equally."</div>
+        <div class="src">Sadker, D. & Zittleman, K. <span class="title">Still Failing at Fairness: How Gender Bias Cheats Girls and Boys in School and What We Can Do About It</span> (Scribner, 2009).</div>
+      </div>
+
+      <div class="citation">
+        <div class="ent">Entry 03 · Staff lounge</div>
+        <div class="quote">"Deficit framing of families of color — 'they don't care,' 'they won't show up' — is the single strongest predictor of low teacher expectations."</div>
+        <div class="src">Hammond, Z. <span class="title">Culturally Responsive Teaching and the Brain: Promoting Authentic Engagement and Rigor Among Culturally and Linguistically Diverse Students</span> (Corwin, 2014).</div>
+      </div>
+
+      <div class="citation">
+        <div class="ent">Entry 04 · Conferences</div>
+        <div class="quote">"Asian American students are disproportionately described by teachers in trait-based language ('sweet,' 'quiet') rather than skill-based language."</div>
+        <div class="src">Lee, S. J. <span class="title">Unraveling the "Model Minority" Stereotype: Listening to Asian American Youth</span>, 2nd ed. (Teachers College Press, 2009).</div>
+      </div>
+
+      <div class="citation">
+        <div class="ent">Entry 05 · Tracking</div>
+        <div class="quote">"Black students are 54% less likely than white students with the same test scores to be recommended for gifted programs by their teachers."</div>
+        <div class="src">Grissom, J. A. & Redding, C. (2016). "Discretion and Disproportionality: Explaining the Underrepresentation of High-Achieving Students of Color in Gifted Programs." <span class="title">AERA Open</span>, 2(1).</div>
+      </div>
+
+      <div class="citation">
+        <div class="ent">Entry 06 · SPED</div>
+        <div class="quote">"Black students are 40% more likely to be identified with emotional/behavioral disorders, and far less likely with specific learning disabilities, than white peers with similar profiles."</div>
+        <div class="src">National Center for Learning Disabilities. <span class="title">Significant Disproportionality in Special Education: Trends Among Black Students</span> (2020). Available at ncld.org.</div>
+      </div>
+
+      <div class="citation">
+        <div class="ent">Entry 07 · Conflicts</div>
+        <div class="quote">"Black girls are viewed as less innocent and more adult-like than white girls of the same age, starting as early as age five — a pattern researchers call 'adultification bias.'"</div>
+        <div class="src">Epstein, R., Blake, J., & González, T. (2017). <span class="title">Girlhood Interrupted: The Erasure of Black Girls' Childhood</span>. Georgetown Law Center on Poverty and Inequality.</div>
+      </div>
+
+      <div class="citation">
+        <div class="ent">Entry 08 · Grading</div>
+        <div class="quote">"When the same student essay is presented with a white-sounding or Black-sounding name, teachers on average give the Black-named version a lower grade and more deficit-framed feedback."</div>
+        <div class="src">Quinn, D. M. (2020). "Experimental Evidence on Teachers' Racial Bias in Student Evaluation." <span class="title">Educational Evaluation and Policy Analysis</span>, 42(3).</div>
+      </div>
+
+      <div class="citation">
+        <div class="ent">Entry 09 · IAT</div>
+        <div class="quote">"Over 85% of educators who take the Race IAT show some degree of implicit pro-white association — including the majority of educators of color."</div>
+        <div class="src">Project Implicit, Harvard University. Aggregate data from the Race Implicit Association Test, available at implicit.harvard.edu. See also Banaji, M. & Greenwald, A. <span class="title">Blindspot: Hidden Biases of Good People</span> (Bantam, 2013).</div>
+      </div>
+
+      <div class="citation">
+        <div class="ent">Entry 10 · Action</div>
+        <div class="quote">"Bias training without structural follow-through shows null effects at 90 days. Training plus one sustained structural change shows measurable shifts in referral and grading patterns."</div>
+        <div class="src">Forscher, P. S., Lai, C. K., Axt, J. R., et al. (2019). "A meta-analysis of procedures to change implicit measures." <span class="title">Journal of Personality and Social Psychology</span>, 117(3).</div>
+      </div>
+    </div>
+
+    <!-- APPENDIX B: FURTHER READING -->
+    <div class="page appendix">
+      <h2>Appendix B · Where to read next</h2>
+      <div class="subtitle">If you read fifteen pages a week, you'll finish any one of these in a month. Pick the one whose cover speaks to you.</div>
+
+      <h3>Start here — accessible, classroom-grounded</h3>
+      <ul class="reading">
+        <li><span class="author">Zaretta Hammond.</span> <span class="title">Culturally Responsive Teaching and the Brain.</span> The book most cited by classroom teachers who actually changed their practice. Pairs neuroscience with concrete moves. <span class="note">Best for: anyone who wants the "what do I do Monday" version.</span></li>
+        <li><span class="author">Bettina L. Love.</span> <span class="title">We Want to Do More Than Survive.</span> A polemic and a love letter to abolitionist teaching. Will reframe what you thought "good teaching" meant. <span class="note">Best for: educators ready to interrogate their assumptions about what schools are for.</span></li>
+        <li><span class="author">Christopher Emdin.</span> <span class="title">For White Folks Who Teach in the Hood... and the Rest of Y'all Too.</span> Direct, funny, and full of practical reality-checks. <span class="note">Best for: anyone whose classroom does not match their own background.</span></li>
+      </ul>
+
+      <h3>Go deeper — the cognitive science of bias</h3>
+      <ul class="reading">
+        <li><span class="author">Mahzarin Banaji & Anthony Greenwald.</span> <span class="title">Blindspot: Hidden Biases of Good People.</span> The book by the architects of the IAT. Disarmingly readable. <span class="note">Best for: skeptics who want to understand the underlying science.</span></li>
+        <li><span class="author">Jennifer Eberhardt.</span> <span class="title">Biased: Uncovering the Hidden Prejudice That Shapes What We See, Think, and Do.</span> A Stanford psychologist's tour through the data, including a chapter on schools. <span class="note">Best for: anyone who likes their argument with research receipts.</span></li>
+        <li><span class="author">Beverly Daniel Tatum.</span> <span class="title">"Why Are All the Black Kids Sitting Together in the Cafeteria?"</span> Updated edition. The foundational text on racial identity development in schools. <span class="note">Best for: educators in racially diverse buildings.</span></li>
+      </ul>
+
+      <h3>For voices the workbook didn't make room for</h3>
+      <ul class="reading">
+        <li><span class="author">Gholdy Muhammad.</span> <span class="title">Cultivating Genius: An Equity Framework for Culturally and Historically Responsive Literacy.</span> A literacy framework rooted in the Black literary societies of the 1800s. <span class="note">Best for: K-5 ELA teachers.</span></li>
+        <li><span class="author">Monique W. Morris.</span> <span class="title">Pushout: The Criminalization of Black Girls in Schools.</span> The book that gave many educators the language for what they'd been seeing happen to Black girls. <span class="note">Best for: anyone in a building with disproportionate referrals of girls of color.</span></li>
+        <li><span class="author">Carla Shalaby.</span> <span class="title">Troublemakers: Lessons in Freedom from Young Children at School.</span> Four ethnographies of "difficult" first-graders. Will change how you see classroom canaries. <span class="note">Best for: K-2 teachers and anyone who has ever called a six-year-old a problem.</span></li>
+      </ul>
+
+      <h3>Online — free, no commitment</h3>
+      <ul class="reading">
+        <li><span class="author">Project Implicit.</span> <span class="title">Implicit Association Tests.</span> implicit.harvard.edu. Take the Race IAT in fifteen minutes. Don't share your score; do sit with it. <span class="note">Free.</span></li>
+        <li><span class="author">Learning for Justice (formerly Teaching Tolerance).</span> learningforjustice.org. Lesson plans, framework articles, and the Social Justice Standards. <span class="note">Free, K-12.</span></li>
+        <li><span class="author">EdWeek.</span> "Where Implicit Bias Lives in Schools" series. A useful set of short, recent articles to keep on hand for staff conversations. <span class="note">Some paywall, much free.</span></li>
+      </ul>
+
+      <p style="margin-top: 32px; padding: 16px 18px; background: var(--hi-yellow); transform: rotate(-0.3deg); font-style: italic; font-size: 14.5px; line-height: 1.6;">
+        <strong style="font-style: normal; font-family: 'Caveat', cursive; font-size: 16px; color: var(--marker);">A last note —</strong>
+        These are starting points, not a syllabus. Your students, your colleagues, and your own attention will tell you what to read next better than any list can.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+</html>
